@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  netcoreredisexample:
+    image: ${DOCKER_REGISTRY-}netcoreredisexample
+    build:
+      context: .
+      dockerfile: NETCoreRedisExample/Dockerfile
+    networks:
+      - network-api
+    depends_on:
+      - "redis"
+  redis:
+    image: redis
+    command: redis-server
+    ports:
+     - "16379:6379"
+    networks:
+      - network-api
+
+networks: 
+  network-api:
+    driver: bridge
